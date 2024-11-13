@@ -66,6 +66,7 @@ public:
         auto pos = filename.find_last_of(".");
         auto ext = filename.substr(pos);
         if (ext == ".txt" || ext == ".dat") {
+            printf("Loading graph %s ...\n", filename.c_str());
             auto adj_list = load_edgelist_txt<V>(filename);
 
             this->n = adj_list.size();

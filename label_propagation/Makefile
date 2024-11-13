@@ -1,7 +1,7 @@
-INCLUDE = -I include -I ../moderngpu/include -I ../cub
-CCFLAGS = $(INCLUDE) -O3 -std=c++0x
+INCLUDE = -I include -I ../moderngpu/include -I ../cub -I ../../nccl/build/include
+CCFLAGS = $(INCLUDE) -O3 -std=c++17
 GPUARCH = -gencode arch=compute_60,code=sm_60
-CUFLAGS = $(INCLUDE) -O3 -std=c++11 -use_fast_math $(GPUARCH) -Xptxas -v -Xcompiler -fopenmp $(LIBRARY) -lnccl -lineinfo
+CUFLAGS = $(INCLUDE) -O3 -std=c++17 -use_fast_math $(GPUARCH) -Xptxas -v -Xcompiler -fopenmp $(LIBRARY) -L ../../nccl/build/lib -lnccl -lineinfo -DTHRUST_IGNORE_CUB_VERSION_CHECK
 TARGET = bin/galp
 
 SOURCE = src/main.cu src/common/*.cuh src/dpp/*.cuh src/lfht/*.cuh include/*.h Makefile

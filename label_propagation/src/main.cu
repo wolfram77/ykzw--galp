@@ -65,7 +65,7 @@ void check_gpu_mem(V n, E m, int ngpus)
 
 
 template<typename T, typename... Args>
-std::unique_ptr<T> make_unique(Args&&... args)
+std::unique_ptr<T> my_make_unique(Args&&... args)
 {
     return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
@@ -141,69 +141,69 @@ int main(int argc, char *argv[])
         buffer_pow = 0;
         proc_name = "dpp\tincore";
         check_gpu_mem(n, m, 1);
-        propagator = make_unique<InCoreDPP<Vertex, Edge>>(graph);
+        propagator = my_make_unique<InCoreDPP<Vertex, Edge>>(graph);
         break;
 
     case 1:
         proc_name = "dpp\tsync";
-        propagator = make_unique<SyncDPP<Vertex, Edge>>(graph, buffer_pow);
+        propagator = my_make_unique<SyncDPP<Vertex, Edge>>(graph, buffer_pow);
         break;
 
     case 2:
         proc_name = "dpp\tasync";
-        propagator = make_unique<AsyncDPP<Vertex, Edge>>(graph, buffer_pow);
+        propagator = my_make_unique<AsyncDPP<Vertex, Edge>>(graph, buffer_pow);
         break;
 
     case 3:
         proc_name = "dpp\thybrid";
-        propagator = make_unique<HybridDPP<Vertex, Edge>>(graph, buffer_pow);
+        propagator = my_make_unique<HybridDPP<Vertex, Edge>>(graph, buffer_pow);
         break;
 
     case 4:
         buffer_pow = 0;
         proc_name = "dpp\tli";
         check_gpu_mem(n, m, 1);
-        propagator = make_unique<InCoreLIDPP<Vertex, Edge>>(graph);
+        propagator = my_make_unique<InCoreLIDPP<Vertex, Edge>>(graph);
         break;
 
     case 5:
         buffer_pow = 0;
         proc_name = "lfht" + std::to_string(lfht_policy) + "\tincore";
         check_gpu_mem(n, m, 1);
-        propagator = make_unique<InCoreLFHT<Vertex, Edge>>(graph, lfht_policy);
+        propagator = my_make_unique<InCoreLFHT<Vertex, Edge>>(graph, lfht_policy);
         break;
 
     case 6:
         proc_name = "lfht" + std::to_string(lfht_policy) + "\tsync";
-        propagator = make_unique<SyncLFHT<Vertex, Edge>>(graph, lfht_policy, buffer_pow);
+        propagator = my_make_unique<SyncLFHT<Vertex, Edge>>(graph, lfht_policy, buffer_pow);
         break;
 
     case 7:
         proc_name = "lfht" + std::to_string(lfht_policy) + "\tasync";
-        propagator = make_unique<AsyncLFHT<Vertex, Edge>>(graph, lfht_policy, buffer_pow);
+        propagator = my_make_unique<AsyncLFHT<Vertex, Edge>>(graph, lfht_policy, buffer_pow);
         break;
 
     case 8:
         proc_name = "lfht" + std::to_string(lfht_policy) + "\thybrid";
-        propagator = make_unique<HybridLFHT<Vertex, Edge>>(graph, lfht_policy, buffer_pow);
+        propagator = my_make_unique<HybridLFHT<Vertex, Edge>>(graph, lfht_policy, buffer_pow);
         break;
 
     case 9:
         proc_name = "lfht" + std::to_string(lfht_policy) + "\tasync multi" + std::to_string(ngpus);
-        propagator = make_unique<MultiAsyncLFHT<Vertex, Edge>>(graph, ngpus, lfht_policy, buffer_pow);
+        propagator = my_make_unique<MultiAsyncLFHT<Vertex, Edge>>(graph, ngpus, lfht_policy, buffer_pow);
         break;
 
     case 10:
         buffer_pow = 0;
         proc_name = "lfht" + std::to_string(lfht_policy) + "\tincore multi" + std::to_string(ngpus);
         check_gpu_mem(n, m, ngpus);
-        propagator = make_unique<MultiInCoreLP<Vertex, Edge>>(graph, ngpus, lfht_policy);
+        propagator = my_make_unique<MultiInCoreLP<Vertex, Edge>>(graph, ngpus, lfht_policy);
         break;
 
     default:
         buffer_pow = 0;
         proc_name = "serial\t ";
-        propagator = make_unique<LabelPropagator<Vertex, Edge>>(graph);
+        propagator = my_make_unique<LabelPropagator<Vertex, Edge>>(graph);
     }
     std::cout << "----------" << proc_name << "----------" << std::endl;
     cudaProfilerStart();

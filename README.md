@@ -1,3 +1,8 @@
+> NOTE: We fixed build issues with this software, but unfortunately we were unable to get it to load a large input web graph (in edgelist format). For more details see [Issue #1](https://github.com/wolfram77/ykzw--galp/issues/1).
+
+<br>
+<br>
+
 # GPU-Accelerated Label Propagation for Graph Clustering
 
 An implementation of gpu-accelerated label propagation for graph clustering, described in the
